@@ -1,49 +1,44 @@
 package de.randombyte.kosp.extensions
 
-import de.randombyte.byteitems.ByteItemsApi
-import me.rojo8399.placeholderapi.PlaceholderService
+import de.randombyte.ktskript.utils.*
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.TextComponent
 import org.spongepowered.api.Sponge
-import org.spongepowered.api.item.ItemType
-import org.spongepowered.api.item.inventory.ItemStack
-import org.spongepowered.api.item.inventory.ItemStackSnapshot
 import org.spongepowered.api.profile.GameProfile
-import org.spongepowered.api.text.Text
-import org.spongepowered.api.text.TextTemplate
-import org.spongepowered.api.text.action.TextAction
-import org.spongepowered.api.text.serializer.TextSerializers
 import java.util.concurrent.CompletableFuture
 
-fun String.toText(): Text = Text.of(this)
+fun String.toText(): TextComponent = Component.text(this)
 
-fun String.aqua(): Text = toText().aqua()
-fun String.black(): Text = toText().black()
-fun String.blue(): Text = toText().blue()
-fun String.darkAqua(): Text = toText().darkAqua()
-fun String.darkBlue(): Text = toText().darkBlue()
-fun String.darkGray(): Text = toText().darkGray()
-fun String.darkGreen(): Text = toText().darkGreen()
-fun String.darkPurple(): Text = toText().darkPurple()
-fun String.darkRed(): Text = toText().darkRed()
-fun String.gold(): Text = toText().gold()
-fun String.gray(): Text = toText().gray()
-fun String.green(): Text = toText().green()
-fun String.lightPurple(): Text = toText().lightPurple()
-fun String.red(): Text = toText().red()
-fun String.white(): Text = toText().white()
-fun String.yellow(): Text = toText().yellow()
+fun String.aqua(): TextComponent = toText().aqua()
+fun String.black(): TextComponent = toText().black()
+fun String.blue(): TextComponent = toText().blue()
+fun String.darkAqua(): TextComponent = toText().darkAqua()
+fun String.darkBlue(): TextComponent = toText().darkBlue()
+fun String.darkGray(): TextComponent = toText().darkGray()
+fun String.darkGreen(): TextComponent = toText().darkGreen()
+fun String.darkPurple(): TextComponent = toText().darkPurple()
+fun String.darkRed(): TextComponent = toText().darkRed()
+fun String.gold(): TextComponent = toText().gold()
+fun String.gray(): TextComponent = toText().gray()
+fun String.green(): TextComponent = toText().green()
+fun String.lightPurple(): TextComponent = toText().lightPurple()
+fun String.red(): TextComponent = toText().red()
+fun String.white(): TextComponent = toText().white()
+fun String.yellow(): TextComponent = toText().yellow()
 
-fun String.bold(): Text = toText().bold()
-fun String.italic(): Text = toText().italic()
-fun String.obfuscated(): Text = toText().obfuscated()
-fun String.reset(): Text = toText().reset()
-fun String.strikethrough(): Text = toText().strikethrough()
-fun String.underline(): Text = toText().underline()
+fun String.bold(): TextComponent = toText().bold()
+fun String.italic(): TextComponent = toText().italic()
+fun String.obfuscated(): TextComponent = toText().obfuscated()
 
-fun <T : TextAction<*>> String.action(action: T): Text = toText().action(action)
+/*fun String.reset(): TextComponent = toText().reset()*/
+fun String.strikethrough(): TextComponent = toText().strikethrough()
+fun String.underline(): TextComponent = toText().underline()
 
-fun String.toArg(): TextTemplate.Arg = TextTemplate.arg(this).build()
+/*fun <T : TextAction<*>> String.action(action: T): TextComponent = toText().action(action)*/
 
-fun String.deserialize(): Text = TextSerializers.FORMATTING_CODE.deserialize(this)
+/*fun String.toArg(): TextTemplate.Arg = TextTemplate.arg(this).build()
+
+fun String.deserialize(): TextComponent = TextSerializers.FORMATTING_CODE.deserialize(this)*/
 
 fun String.limit(end: Int): String = substring(0, end.coerceAtMost(length))
 
@@ -61,14 +56,15 @@ fun String.replace(values: Map<String, String>): String {
 /**
  * Tries to process the placeholders if PlaceholderAPI is loaded.
  */
-fun String.tryReplacePlaceholders(source: Any? = null, observer: Any? = null): String {
-    if (!Sponge.getPluginManager().getPlugin("placeholderapi").isPresent) return this
+/*fun String.tryReplacePlaceholders(source: Any? = null, observer: Any? = null): String {
+    if (!Sponge.pluginManager().plugin("placeholderapi").isPresent) return this
 
-    val placeholderService = PlaceholderService::class.getServiceOrFail(failMessage = "PlaceholderAPI could not be loaded although the plugin itself is present!")
+    val placeholderService =
+        PlaceholderService::class.getServiceOrFail(failMessage = "PlaceholderAPI could not be loaded although the plugin itself is present!")
 
     val placeholders = Common.PLACEHOLDER_PATTERN
-            .findAll(this)
-            .map { matchResult -> matchResult.groupValues[1] }.toList()
+        .findAll(this)
+        .map { matchResult -> matchResult.groupValues[1] }.toList()
     val replacements = placeholders.mapNotNull { placeholder ->
         val replacement = placeholderService.parse(placeholder, source, observer) ?: return@mapNotNull null
         val replacementString = if (replacement is Text) {
@@ -80,26 +76,29 @@ fun String.tryReplacePlaceholders(source: Any? = null, observer: Any? = null): S
     }.toMap()
 
     return this.replace(replacements)
-}
+}*/
 
+/*
 fun String.tryAsByteItem(failMessage: String? = null): ItemStackSnapshot {
     if (!Sponge.getPluginManager().getPlugin("byte-items").isPresent) {
         // fall back to normal minecraft item types
         val itemType = Sponge.getRegistry().getType(ItemType::class.java, this)
-                .orElseThrow { IllegalArgumentException("Couldn't find ItemType '$this'!") }
+            .orElseThrow { IllegalArgumentException("Couldn't find ItemType '$this'!") }
         return ItemStack.of(itemType, 1).createSnapshot()
     }
 
-    val byteItemsApi = ByteItemsApi::class.getServiceOrFail(failMessage = "ByteItems could not be loaded although the plugin itself is present!")
+    val byteItemsApi =
+        ByteItemsApi::class.getServiceOrFail(failMessage = "ByteItems could not be loaded although the plugin itself is present!")
     return if (failMessage != null) {
         byteItemsApi.getItemSafely(id = this, failMessage = failMessage)
     } else {
         byteItemsApi.getItemSafely(id = this)
     }
 }
+*/
 
 // Misc functions
 
-fun String.asGameProfile(): CompletableFuture<GameProfile> = Sponge.getServer().gameProfileManager.get(this)
+fun String.asGameProfile(): CompletableFuture<GameProfile> = Sponge.server().gameProfileManager().profile(this)
 
-fun String.executeAsConsole() = Sponge.getServer().console.executeCommand(this)
+fun String.executeAsConsole() = Sponge.server().commandManager().process(this)

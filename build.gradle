@@ -1,12 +1,11 @@
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.2.50"
+    id "org.jetbrains.kotlin.jvm" version "1.8.0"
 }
 
 group "de.randombyte"
 version "2.2.3"
 
 repositories {
-    jcenter()
     maven { url "https://repo.spongepowered.org/maven/" }
     maven { url "https://jitpack.io" }
 }
@@ -15,15 +14,14 @@ dependencies {
     // kosp can only be used when the kotlin runtime and stdlib exist at runtime
     // these dependencies are not shaded into kosp to reduce the final plugin size
     // there is a small risk of breaking kosp when the parent plugin's provided kotlin version doesn't match the one kosp was compiled against
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.50"
-    compile "org.spongepowered:spongeapi:7.0.0"
-    compile "com.github.randombyte-developer:PlaceholderAPI:v4.5.1"
-    compile "com.github.randombyte-developer:byte-items:v2.2.6"
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0"
+    compileOnly "org.spongepowered:spongeapi:8.1.0"
+    compileOnly "com.github.randombyte-developer:PlaceholderAPI:v4.5.1"
+    compileOnly "com.github.randombyte-developer:byte-items:v2.2.6"
 }
 
 // Produces the source-jar, which is for JitPack
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = "sources"
     from sourceSets.main.allSource
 }
 
@@ -31,8 +29,12 @@ artifacts {
     archives sourcesJar
 }
 
+compileJava {
+    targetCompatibility = "17"
+}
+
 compileKotlin {
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }

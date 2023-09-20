@@ -1,9 +1,10 @@
 package de.randombyte.kosp.config.serializers.date
 
-import com.google.common.reflect.TypeToken
-import ninja.leaping.configurate.ConfigurationNode
-import ninja.leaping.configurate.objectmapping.ObjectMappingException
-import ninja.leaping.configurate.objectmapping.serialize.TypeSerializer
+import org.spongepowered.configurate.ConfigurateException
+import org.spongepowered.configurate.ConfigurationNode
+import org.spongepowered.configurate.serialize.TypeSerializer
+import java.lang.reflect.Type
+
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -12,12 +13,6 @@ object SimpleDateTypeSerializer : TypeSerializer<Date> {
 
     private val legacyDateFormat = SimpleDateFormat("HH:mm:ss.SSS dd.MM.yyyy")
     private val dateFormat = SimpleDateFormat("HH:mm:ss.SSS-dd.MM.yyyy")
-
-    override fun deserialize(type: TypeToken<*>, value: ConfigurationNode): Date = deserialize(value.string)
-
-    override fun serialize(type: TypeToken<*>, date: Date, value: ConfigurationNode) {
-        value.value = serialize(date)
-    }
 
     fun deserialize(string: String): Date {
         try {
@@ -29,11 +24,16 @@ object SimpleDateTypeSerializer : TypeSerializer<Date> {
                 // Will be handled further down
             }
 
-            throw ObjectMappingException("Invalid input value '$string' for a date like this: '21:18:25.300-28.03.2017'", exception)
+            throw ConfigurateException("Invalid input value '$string' for a date like this: '21:18:25.300-28.03.2017'", exception)
         }
     }
 
     fun serialize(date: Date): String = dateFormat.format(date)
 
     private fun deserializeLegacy(string: String) = legacyDateFormat.parse(string)
+    override fun deserialize(type: Type?, node: ConfigurationNode?): Date? = node?.string?.let { deserialize(it) }
+
+    override fun serialize(type: Type?, obj: Date?, node: ConfigurationNode?) {
+        node?.set(obj?.let { serialize(it) })
+    }
 }

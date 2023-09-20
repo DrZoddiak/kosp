@@ -1,14 +1,10 @@
 package de.randombyte.kosp.extensions
 
-import org.spongepowered.api.command.CommandException
-import org.spongepowered.api.data.key.Keys
 import org.spongepowered.api.data.type.HandTypes
 import org.spongepowered.api.entity.EntityTypes
 import org.spongepowered.api.entity.living.player.Player
 import org.spongepowered.api.item.inventory.Inventory
 import org.spongepowered.api.item.inventory.ItemStack
-import org.spongepowered.api.item.inventory.entity.MainPlayerInventory
-import org.spongepowered.api.item.inventory.query.QueryOperationTypes
 import org.spongepowered.api.item.inventory.transaction.InventoryTransactionResult
 
 /**
@@ -17,6 +13,7 @@ import org.spongepowered.api.item.inventory.transaction.InventoryTransactionResu
  * 2. putting it somewhere in the inventory
  * 3. dropping it onto the ground
  */
+/*
 fun Player.give(itemStack: ItemStack) {
     val isPlayerHoldingSomething = getItemInHand(HandTypes.MAIN_HAND).isPresent
     if (!isPlayerHoldingSomething) {
@@ -36,4 +33,4 @@ fun Player.give(itemStack: ItemStack) {
             }
         }
     }
-}
+}*/

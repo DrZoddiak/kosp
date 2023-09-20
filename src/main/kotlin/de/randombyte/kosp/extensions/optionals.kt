@@ -10,4 +10,4 @@ fun <T> Optional<T>.orNull(): T? = orElse(null)
 /**
  * And the other way around.
  */
-fun <T> T?.toOptional(): Optional<T> = Optional.ofNullable(this)
+fun <T : Any> T?.toOptional(): Optional<T> = Optional.ofNullable(this)

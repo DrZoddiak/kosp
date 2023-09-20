@@ -1,8 +1,9 @@
 package de.randombyte.kosp.config.serializers.duration
 
 import com.google.common.reflect.TypeToken
-import ninja.leaping.configurate.ConfigurationNode
-import ninja.leaping.configurate.objectmapping.serialize.TypeSerializer
+import org.spongepowered.configurate.ConfigurationNode
+import org.spongepowered.configurate.serialize.TypeSerializer
+import java.lang.reflect.Type
 import java.time.Duration
 
 /**
@@ -24,10 +25,11 @@ object SimpleDurationTypeSerializer : TypeSerializer<Duration> {
 
     val REGEX = "(?:(\\d+)d)?(?:(\\d+)h)?(?:(\\d+)m)?(?:(\\d+)s)?(?:(\\d+)ms)?".toRegex()
 
-    override fun deserialize(type: TypeToken<*>, node: ConfigurationNode) = deserialize(node.string)
+    override fun deserialize(type: Type, node: ConfigurationNode): Duration? = node.string?.let { deserialize(it) }
 
-    override fun serialize(type: TypeToken<*>, duration: Duration, node: ConfigurationNode) {
-        node.value = serialize(duration)
+
+    override fun serialize(type: Type?, obj: Duration?, node: ConfigurationNode?) {
+        node?.set(obj?.let { serialize(it) })
     }
 
     fun deserialize(string: String): Duration {

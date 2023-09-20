@@ -1,3 +1,4 @@
+/*
 package de.randombyte.testplugin
 
 import com.google.inject.Inject
@@ -122,4 +123,4 @@ class TestPlugin @Inject constructor(
         fixedTextTemplateOf(clickText, noClickText).apply().build().broadcast()
         TextTemplate.of(clickText, noClickText).apply().build().broadcast()
     }
-}
+}*/

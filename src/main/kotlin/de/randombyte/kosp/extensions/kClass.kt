@@ -6,5 +6,5 @@ import kotlin.reflect.KClass
 
 fun <T : Any> KClass<T>.getServiceOrFail(failMessage: String = "'${this.java.simpleName}' is not available!"): T {
     val message = if (this == EconomyService::class) "No economy plugin is available!" else failMessage
-    return Sponge.getServiceManager().provide(this.java).orElseThrow { RuntimeException(message) }
+    return Sponge.serviceProvider().provide(this.java).orElseThrow { RuntimeException(message) }
 }

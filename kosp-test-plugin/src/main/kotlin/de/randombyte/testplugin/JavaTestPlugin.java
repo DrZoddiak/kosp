@@ -1,25 +1,7 @@
+/*
 package de.randombyte.testplugin;
 
-import static org.spongepowered.api.text.TextTemplate.arg;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.inject.Inject;
-import de.randombyte.kosp.UtilsKt;
-import de.randombyte.kosp.config.ConfigManager;
-import ninja.leaping.configurate.commented.CommentedConfigurationNode;
-import ninja.leaping.configurate.loader.ConfigurationLoader;
-import ninja.leaping.configurate.objectmapping.Setting;
-import ninja.leaping.configurate.objectmapping.serialize.ConfigSerializable;
-import org.spongepowered.api.Sponge;
-import org.spongepowered.api.command.CommandResult;
-import org.spongepowered.api.command.spec.CommandSpec;
-import org.spongepowered.api.config.DefaultConfig;
-import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.game.state.GameInitializationEvent;
-import org.spongepowered.api.plugin.Plugin;
-import org.spongepowered.api.text.Text;
-import org.spongepowered.api.text.TextTemplate;
-import org.spongepowered.api.text.format.TextColors;
 
 @Plugin(id = "java-kosp-test-plugin", name = "JavaKospTestPlugin", version = "1.0")
 public class JavaTestPlugin {
@@ -83,3 +65,4 @@ public class JavaTestPlugin {
         Sponge.getServer().getBroadcastChannel().send(text);
     }
 }
+*/
